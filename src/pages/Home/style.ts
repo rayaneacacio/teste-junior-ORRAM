@@ -10,7 +10,7 @@ export const Container = styled.div`
     > div {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1rem;
     }
   }
 
@@ -51,6 +51,10 @@ export const Container = styled.div`
   }
 
   @media(min-width: 600px) {
+    .selecionarMoeda > div {
+      gap: 1.5rem;
+    }
+
     table button svg {
       width: 2.9rem;
       height: 2.9rem;

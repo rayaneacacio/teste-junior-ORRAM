@@ -13,8 +13,19 @@ export default createGlobalStyle`
   }
 
   body {
-    margin: 3rem 2rem;
-    overflow: auto;
+    overflow: hidden;
+
+    > div {
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      padding: 3rem 0 10rem;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 
   body, button, select {
@@ -36,11 +47,24 @@ export default createGlobalStyle`
     -webkit-tap-highlight-color: transparent;
   }
 
-  @media(min-width: 1000px) {
-    body {
-      margin: 3rem 5rem;
-    }
+  @media(min-width: 700px) {
+    body > div {
+      padding: 3rem 5rem;
 
+      &::-webkit-scrollbar {
+        display: block;
+        width: 18px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: ${({ theme }) => theme.COLORS.GRAY_2};
+        border: 5px solid ${({ theme }) => theme.COLORS.WHITE};
+        border-radius: 10px;
+      }
+    }
+  }
+
+  @media(min-width: 1000px) {
     body, button, select {
       font-size: 2rem;
     }
