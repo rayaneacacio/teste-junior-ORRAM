@@ -14,7 +14,7 @@ export default createGlobalStyle`
 
   body {
     margin: 3rem 2rem;
-    overflow: hidden;
+    overflow: auto;
   }
 
   body, button, select {
@@ -23,6 +23,7 @@ export default createGlobalStyle`
   }
 
   button {
+    background: none;
     cursor: pointer;
     transition: 0.3s;
 
@@ -36,6 +37,10 @@ export default createGlobalStyle`
   }
 
   @media(min-width: 1000px) {
+    body {
+      margin: 3rem 5rem;
+    }
+
     body, button, select {
       font-size: 2rem;
     }
