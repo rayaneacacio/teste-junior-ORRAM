@@ -7,11 +7,14 @@ export default function Select(props: { defaultValue?: string }): ReactElement {
 
   function handleOpenSelect(container: HTMLDivElement): void {
     const options = container.querySelector(".options")! as HTMLDivElement;
+    const svg = container.querySelector("svg")! as SVGElement;
 
     if(options.style.display == "none") {
       options.style.display = "block";
+      svg.style.transform = "rotateX(180deg)";
     } else {
       options.style.display = "none";
+      svg.style.transform = "rotateX(0)";
     }
   }
 

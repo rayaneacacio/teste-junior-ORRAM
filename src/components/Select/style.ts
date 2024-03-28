@@ -18,6 +18,7 @@ export const Container = styled.div`
   svg {
     position: absolute;
     right: 1rem;
+    transition: 0.3s;
   }
 
   .options {
