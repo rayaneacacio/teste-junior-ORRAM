@@ -41,7 +41,7 @@ export default function Home(): ReactElement {
               <td>R$ 4.98</td>
               <td>R$ 4.99</td>
               <td> <Span text="20/02/2023" /> </td>
-              <td className="coloGray">15%</td>
+              <td className="coloGray tdPorcentagem">15%</td>
               <td>
                 <button className="coloGray"> <IoIosMore size={ 25 } /> </button>
               </td>
@@ -53,7 +53,7 @@ export default function Home(): ReactElement {
               <td>R$ 4.98</td>
               <td>R$ 4.99</td>
               <td> <Span text="20/02/2023" /> </td>
-              <td className="coloGray">15%</td>
+              <td className="coloGray tdPorcentagem">15%</td>
               <td>
                 <button className="coloGray"> <IoIosMore size={ 25 } /> </button>
               </td>

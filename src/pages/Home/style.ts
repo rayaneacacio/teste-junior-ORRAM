@@ -16,8 +16,12 @@ export const Container = styled.div`
 
   .divSelects {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
+
+    svg {
+      margin-top: 4px;
+    }
   }
 
   main {
@@ -40,6 +44,21 @@ export const Container = styled.div`
 
   .coloGray {
     color: ${({ theme }) => theme.COLORS.GRAY_2};
+  }
+
+  .tdPorcentagem {
+    padding-left: 4rem;
+  }
+
+  @media(min-width: 600px) {
+    table button svg {
+      width: 2.9rem;
+      height: 2.9rem;
+    }
+
+    .tdPorcentagem {
+      padding-left: 6rem;
+    }
   }
 
   @media(min-width: 1100px) {
