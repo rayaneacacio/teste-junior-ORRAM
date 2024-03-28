@@ -13,7 +13,8 @@ export default createGlobalStyle`
   }
 
   body {
-    padding: 3rem;
+    margin: 3rem 2rem;
+    overflow: hidden;
   }
 
   body, button, select {
