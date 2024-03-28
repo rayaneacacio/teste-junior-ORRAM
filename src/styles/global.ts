@@ -13,12 +13,29 @@ export default createGlobalStyle`
   }
 
   body {
+    padding: 3rem;
+  }
+
+  body, button, select {
     font-family: ${({ theme }) => theme.FONTS.DEFAULT};
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+  }
+
+  button {
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      filter: brightness(0.7);
+    }
+  }
+
+  button, select {
+    -webkit-tap-highlight-color: transparent;
   }
 
   @media(min-width: 1000px) {
-    body {
+    body, button, select {
       font-size: 2rem;
     }
   }
