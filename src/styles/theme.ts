@@ -1,7 +1,7 @@
 export default{
   COLORS: {
     WHITE: "#FFF",
-    GRAY: "#808080",
+    GRAY: "#bfbfbf",
     BLACK: "#000"
   },
   FONTS: {
