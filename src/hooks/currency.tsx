@@ -15,12 +15,7 @@ const initialValue  = {
   },
   findCurrencies: async(): Promise<void> => {},
   getVariation15days: async(): Promise<IVariationCurrency[]> => [{
-    code: "",
-    codein: "",
-    create_date: "",
     name: "",
-    ask: 0,
-    bid: 0,
     high: 0,
     low: 0,
     pctChange: 0,
@@ -36,12 +31,7 @@ export interface ICurrency {
 }
 
 export interface IVariationCurrency {
-  code: string;
-  codein: string;
-  create_date: string;
   name: string
-  ask: number;
-  bid: number;
   high: number;
   low: number;
   pctChange: number;
