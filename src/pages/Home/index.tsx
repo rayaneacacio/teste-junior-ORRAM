@@ -1,11 +1,29 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { Container } from "./style";
 import Button from "../../components/Button";
 import Span from "../../components/Span";
 import Select from "../../components/Select";
 import { IoIosMore } from "react-icons/io";
+import { IVariationCurrency, useCurrency } from "../../hooks/currency";
 
 export default function Home(): ReactElement {
+  const { getVariation15days } = useCurrency();
+  const [ nameCurrencies, setNameCurrencies ] = useState<string>("Dólar Americano/Real Brasileiro");
+  const [ listVariations, setListVariations ] = useState<IVariationCurrency[]>([]);
+
+  async function handleVariation15days(): Promise<void> {
+    const selects: HTMLDivElement[] = Array.from(document.querySelectorAll(".select"));
+    const firstCurrency: string = selects[0].innerText;
+    const secondCurrency: string = selects[1].innerText;
+
+    const data = await getVariation15days(firstCurrency, secondCurrency);
+
+    if(data) {
+      setNameCurrencies(data[0].name);
+      setListVariations(data);
+    }
+  }
+
   return (
     <Container>
       <div className="selecionarMoeda">
@@ -17,11 +35,11 @@ export default function Home(): ReactElement {
             <Span text="para" />
             <Select defaultValue="BRL" />
           </div>
-          <Button text="Analisar" />
+          <Button text="Analisar" functionOnClick={ handleVariation15days } />
         </div>
 
         <Span text="Nome" />
-        <Span text={ "Dólar Americano/Real Brasileiro" } />
+        <Span text={ nameCurrencies } />
       </div>
       
       <main>
@@ -35,30 +53,36 @@ export default function Home(): ReactElement {
               <th></th>
             </tr>
           </thead>
-          
-          <tbody>
-            <tr>
-              <td>R$ 4.98</td>
-              <td>R$ 4.99</td>
-              <td> <Span text="20/02/2023" /> </td>
-              <td className="coloGray tdPorcentagem">15%</td>
-              <td>
-                <button className="coloGray"> <IoIosMore size={ 25 } /> </button>
-              </td>
-            </tr>
-          </tbody>
 
-          <tbody>
-            <tr>
-              <td>R$ 4.98</td>
-              <td>R$ 4.99</td>
-              <td> <Span text="20/02/2023" /> </td>
-              <td className="coloGray tdPorcentagem">15%</td>
-              <td>
-                <button className="coloGray"> <IoIosMore size={ 25 } /> </button>
-              </td>
-            </tr>
-          </tbody>
+          {
+            listVariations?.map((variation: IVariationCurrency, index: number) => (
+              <tbody key={ index }>
+                <tr>
+                  <td>
+                    { new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(variation.low) }
+                  </td>
+
+                  <td>
+                    { new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(variation.high) }
+                  </td>
+
+                  <td> 
+                    <Span text={ 
+                    String(new Intl.DateTimeFormat("pt-br")
+                    .format(new Date(variation.timestamp * 1000))
+                    ) } />
+                  </td>
+
+                  <td className="colorGray tdPorcentagem">
+                    { (variation.pctChange * 100).toFixed(0) + "%" }
+                  </td>
+                  <td>
+                    <button className="colorGray"> <IoIosMore size={ 25 } /> </button>
+                  </td>
+                </tr>
+              </tbody>
+            ))
+          }
         </table>
       </main>
     </Container>

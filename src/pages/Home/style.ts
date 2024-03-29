@@ -42,7 +42,7 @@ export const Container = styled.div`
     }
   }
 
-  .coloGray {
+  .colorGray {
     color: ${({ theme }) => theme.COLORS.GRAY_2};
   }
 
