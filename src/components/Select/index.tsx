@@ -1,8 +1,10 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Container } from "./style";
 import { IoIosArrowDown } from "react-icons/io";
+import { useCurrency } from "../../hooks/currency";
 
 export default function Select(props: { defaultValue?: string }): ReactElement {
+  const { findCurrencies, currencies } = useCurrency();
   const [ value, setValue ] = useState<string>(props.defaultValue ?? "USD");
 
   function handleOpenSelect(container: HTMLDivElement): void {
@@ -18,6 +20,19 @@ export default function Select(props: { defaultValue?: string }): ReactElement {
     }
   }
 
+  useEffect(() => {
+    const controller = new AbortController();
+
+    (async(): Promise<void> => {
+      await findCurrencies(controller.signal);
+    })();
+
+    return () => {
+      controller.abort();
+    }
+
+  }, []);
+
   return (
     <Container onClick={(event) => handleOpenSelect(event.currentTarget) }>
       <div className="select">
@@ -26,8 +41,12 @@ export default function Select(props: { defaultValue?: string }): ReactElement {
       </div>
 
       <div className="options">
-        <button onClick={() => setValue("USD") }>USD</button>
-        <button onClick={() => setValue("BRL") }>BRL</button>
+        {
+          currencies &&
+          Object.keys(currencies).map((currency: string, index: number) => (
+            <button key={ index } onClick={() => setValue(currency) }>{ currency }</button>
+          ))
+        }
       </div>
     </Container>
   )

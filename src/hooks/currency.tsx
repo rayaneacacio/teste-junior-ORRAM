@@ -3,7 +3,7 @@ import { apiEconomy } from "../services/api";
 
 interface ICurrencyContext {
   currencies: ICurrency;
-  findCurrencies: (signal: AbortSignal) => {};
+  findCurrencies: (signal: AbortSignal) => Promise<void>;
 }
 
 const initialValue  = {
