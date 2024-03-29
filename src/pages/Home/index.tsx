@@ -10,6 +10,7 @@ export default function Home(): ReactElement {
   const { getVariation15days } = useCurrency();
   const [ nameCurrencies, setNameCurrencies ] = useState<string>("Dólar Americano/Real Brasileiro");
   const [ listVariations, setListVariations ] = useState<IVariationCurrency[]>([]);
+  const [ listBiggestVariations, setListBiggestVariations ] = useState<IVariationCurrency[]>([]);
 
   async function handleVariation15days(): Promise<void> {
     const selects: HTMLDivElement[] = Array.from(document.querySelectorAll(".select"));
@@ -19,9 +20,20 @@ export default function Home(): ReactElement {
     const data = await getVariation15days(firstCurrency, secondCurrency);
 
     if(data) {
+      const variations = handleBiggestVariations(data);
+
       setNameCurrencies(data[0].name);
       setListVariations(data);
+      setListBiggestVariations(variations);
     }
+  }
+
+  function handleBiggestVariations(data: IVariationCurrency[]) {
+    const variationsList = data.map(variation => ({...variation, varBid: Number(variation.varBid)}))
+    const variationsDescendingOrder = variationsList.sort((a, b) => b.varBid - a.varBid);
+    const biggestVarBidList = variationsDescendingOrder.slice(0, 5);
+
+    return biggestVarBidList;
   }
 
   return (
@@ -43,7 +55,10 @@ export default function Home(): ReactElement {
       </div>
       
       <main>
+        <h1>Variações dos ultimos 15 dias</h1>
         <Table variations={ listVariations } />
+        <h1>5 maiores variações</h1>
+        <Table variations={ listBiggestVariations } />
       </main>
     </Container>
   )

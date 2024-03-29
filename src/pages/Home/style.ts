@@ -28,6 +28,11 @@ export const Container = styled.div`
     margin-top: 4rem;
   }
 
+  h1 {
+    font-size: 2.1rem;
+    margin: 5rem 0 1rem;
+  }
+
   .colorGray {
     color: ${({ theme }) => theme.COLORS.GRAY_2};
   }

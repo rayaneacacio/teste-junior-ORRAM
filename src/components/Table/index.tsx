@@ -10,7 +10,7 @@ export default function Table(props: { variations: IVariationCurrency[] }): Reac
       <thead>
         <tr>
           <th>Menor Preço</th>
-          <th className="coloGray">Maior Preço</th>
+          <th className="colorGray">Maior Preço</th>
           <th>Timestamp</th>
           <th>Porcentagem</th>
           <th></th>
