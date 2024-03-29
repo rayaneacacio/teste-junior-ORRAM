@@ -3,8 +3,8 @@ import { Container } from "./style";
 import Button from "../../components/Button";
 import Span from "../../components/Span";
 import Select from "../../components/Select";
-import { IoIosMore } from "react-icons/io";
 import { IVariationCurrency, useCurrency } from "../../hooks/currency";
+import Table from "../../components/Table";
 
 export default function Home(): ReactElement {
   const { getVariation15days } = useCurrency();
@@ -43,47 +43,7 @@ export default function Home(): ReactElement {
       </div>
       
       <main>
-        <table>
-          <thead>
-            <tr>
-              <th>Menor Preço</th>
-              <th className="coloGray">Maior Preço</th>
-              <th>Timestamp</th>
-              <th>Porcentagem</th>
-              <th></th>
-            </tr>
-          </thead>
-
-          {
-            listVariations?.map((variation: IVariationCurrency, index: number) => (
-              <tbody key={ index }>
-                <tr>
-                  <td>
-                    { new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(variation.low) }
-                  </td>
-
-                  <td>
-                    { new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(variation.high) }
-                  </td>
-
-                  <td> 
-                    <Span text={ 
-                    String(new Intl.DateTimeFormat("pt-br")
-                    .format(new Date(variation.timestamp * 1000))
-                    ) } />
-                  </td>
-
-                  <td className="colorGray tdPorcentagem">
-                    { (variation.pctChange * 100).toFixed(0) + "%" }
-                  </td>
-                  <td>
-                    <button className="colorGray"> <IoIosMore size={ 25 } /> </button>
-                  </td>
-                </tr>
-              </tbody>
-            ))
-          }
-        </table>
+        <Table variations={ listVariations } />
       </main>
     </Container>
   )
