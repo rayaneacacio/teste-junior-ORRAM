@@ -42,6 +42,14 @@ export const Container = styled.div`
         filter: none;
       }
     }
+
+    > button:first-of-type {
+      border-radius: 1rem 1rem 0 0;
+    }
+
+    > button:last-of-type {
+      border-radius: 0 0 1rem 1rem;
+    }
   }
 
   @media(min-width: 1000px) {
