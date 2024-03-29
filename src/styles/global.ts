@@ -20,7 +20,7 @@ export default createGlobalStyle`
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: smooth;
-      padding: 3rem 0 10rem;
+      padding: 3rem 2rem 10rem;
 
       &::-webkit-scrollbar {
         display: none;
