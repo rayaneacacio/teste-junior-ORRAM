@@ -10,6 +10,7 @@ export const Container = styled.div`
     > div {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 1rem;
     }
   }
@@ -22,10 +23,6 @@ export const Container = styled.div`
     svg {
       margin-top: 4px;
     }
-  }
-
-  main {
-    margin-top: 4rem;
   }
 
   h1 {
@@ -46,6 +43,17 @@ export const Container = styled.div`
   @media(min-width: 1100px) {
     .selecionarMoeda > div {
       gap: 2.5rem;
+    }
+  }
+
+  @media(min-width: 1200px) {
+    main {
+      display: flex;
+      gap: 5rem;
+
+      > div {
+        width: 50%;
+      }
     }
   }
 `;

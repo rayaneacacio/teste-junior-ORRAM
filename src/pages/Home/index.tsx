@@ -55,10 +55,15 @@ export default function Home(): ReactElement {
       </div>
       
       <main>
-        <h1>Variações dos ultimos 15 dias</h1>
-        <Table variations={ listVariations } />
-        <h1>5 maiores variações</h1>
-        <Table variations={ listBiggestVariations } />
+        <div>
+          <h1>Variações dos ultimos 15 dias</h1>
+          <Table variations={ listVariations } />
+        </div>
+
+        <div>
+          <h1>5 maiores variações</h1>
+          <Table variations={ listBiggestVariations } />
+        </div>
       </main>
     </Container>
   )
