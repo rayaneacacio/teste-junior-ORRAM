@@ -7,33 +7,43 @@ import { IVariationCurrency, useCurrency } from "../../hooks/currency";
 import Table from "../../components/Table";
 
 export default function Home(): ReactElement {
-  const { getVariation15days } = useCurrency();
-  const [ nameCurrencies, setNameCurrencies ] = useState<string>("Dólar Americano/Real Brasileiro");
-  const [ listVariations, setListVariations ] = useState<IVariationCurrency[]>([]);
-  const [ listBiggestVariations, setListBiggestVariations ] = useState<IVariationCurrency[]>([]);
+  const { getVariations, selectedCurrencies, setSelectedCurrencies } = useCurrency();
+  const [ variations, setVariations ] = useState<IVariationCurrency[]>([]);
 
   async function handleVariation15days(): Promise<void> {
-    const selects: HTMLDivElement[] = Array.from(document.querySelectorAll(".select"));
-    const firstCurrency: string = selects[0].innerText;
-    const secondCurrency: string = selects[1].innerText;
-
-    const data = await getVariation15days(firstCurrency, secondCurrency);
+    const data = await getVariations();
 
     if(data) {
-      const variations = handleBiggestVariations(data);
-
-      setNameCurrencies(data[0].name);
-      setListVariations(data);
-      setListBiggestVariations(variations);
+      setVariations(data);
     }
   }
 
-  function handleBiggestVariations(data: IVariationCurrency[]) {
+  function getBiggestVariations(data: IVariationCurrency[]): IVariationCurrency[] {
     const variationsList = data.map(variation => ({...variation, varBid: Number(variation.varBid)}))
     const variationsDescendingOrder = variationsList.sort((a, b) => b.varBid - a.varBid);
     const biggestVarBidList = variationsDescendingOrder.slice(0, 5);
 
     return biggestVarBidList;
+  }
+
+  const biggestVariations = (() => {
+    if (variations.length === 0) return [];
+
+    return getBiggestVariations(variations);
+  })();
+
+  const nameCurrencies = (() => {
+    if(variations.length === 0) return "Dólar Americano/Real Brasileiro";
+
+    return variations[0].name;
+  })();
+
+  function setFirstCurrency (currency: string) {
+    setSelectedCurrencies({ ...selectedCurrencies, firstCurrency: currency });
+  }
+
+  function setSecondCurrency (currency: string) {
+    setSelectedCurrencies({ ...selectedCurrencies, secondCurrency: currency });
   }
 
   return (
@@ -43,9 +53,15 @@ export default function Home(): ReactElement {
 
         <div>
           <div className="divSelects">
-            <Select />
+            <Select 
+              value={ selectedCurrencies.firstCurrency } 
+              setValue={ (value: string) => setFirstCurrency(value) } 
+            />
             <Span text="para" />
-            <Select defaultValue="BRL" />
+            <Select
+              value={ selectedCurrencies.secondCurrency } 
+              setValue={ (value: string) => setSecondCurrency(value) } 
+            />
           </div>
           <Button text="Analisar" functionOnClick={ handleVariation15days } />
         </div>
@@ -57,12 +73,12 @@ export default function Home(): ReactElement {
       <main>
         <div>
           <h1>Variações dos ultimos 15 dias</h1>
-          <Table variations={ listVariations } />
+          <Table variations={ variations } />
         </div>
 
         <div>
           <h1>5 maiores variações</h1>
-          <Table variations={ listBiggestVariations } />
+          <Table variations={ biggestVariations } />
         </div>
       </main>
     </Container>

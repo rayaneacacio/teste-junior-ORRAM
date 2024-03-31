@@ -50,10 +50,6 @@ export const Container = styled.div`
     main {
       display: flex;
       gap: 5rem;
-
-      > div {
-        width: 50%;
-      }
     }
   }
 `;
