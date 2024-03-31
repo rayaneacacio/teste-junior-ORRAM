@@ -9,7 +9,8 @@ Como rodar o projeto:
 # Clone esse repositório
 $ git clone https://github.com/rayaneacacio/teste-junior-ORRAM.git
 
-# Execute o seguinte comando:
+# Execute os seguintes comandos:
+$ npm install
 $ npm run dev
 ```
 
@@ -26,6 +27,8 @@ $ npm run dev
 <p>
   2.Como você otimizaria os ativos/recursos de um site?
   <br>
+  para otimizar o site eu componentizaria os elementos que se repetem, reduziria o tamanho das imagens, só mostraria os recursos 
+  quando forem necessários e utilizaria uma animação de loading enquanto os recursos estao carregando.
 </p>
 
 <p>
@@ -68,6 +71,7 @@ $ npm run dev
 <p>
   8.Explique Function.prototype.bind.
   <br>
+  o método bind() cria uma nova função com uma instancia this sem executar a função original.
 </p>
 
 <p>
