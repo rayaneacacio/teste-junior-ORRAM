@@ -1,24 +1,10 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Container } from "./style";
-import { IoIosArrowDown } from "react-icons/io";
+import { Container, Arrow, Options } from "./style";
 import { useCurrency } from "../../hooks/currency";
 
-export default function Select(props: { defaultValue?: string }): ReactElement {
+export default function Select(props: { value: string, setValue: (value: string) => void }): ReactElement {
   const { findCurrencies, currencies } = useCurrency();
-  const [ value, setValue ] = useState<string>(props.defaultValue ?? "USD");
-
-  function handleOpenSelect(container: HTMLDivElement): void {
-    const options = container.querySelector(".options")! as HTMLDivElement;
-    const svg = container.querySelector("svg")! as SVGElement;
-
-    if(options.style.display == "none") {
-      options.style.display = "block";
-      svg.style.transform = "rotateX(180deg)";
-    } else {
-      options.style.display = "none";
-      svg.style.transform = "rotateX(0)";
-    }
-  }
+  const [ isOpen, setIsOpen ] = useState<boolean>(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -34,20 +20,23 @@ export default function Select(props: { defaultValue?: string }): ReactElement {
   }, []);
 
   return (
-    <Container onClick={(event) => handleOpenSelect(event.currentTarget) }>
+    <Container onClick={() => setIsOpen(prevState => !prevState) }>
       <div className="select">
-        <p>{ value }</p>
-        <IoIosArrowDown size={ 25 } />
+        <p>{ props.value }</p>
+        <Arrow isOpen={ isOpen } />
       </div>
 
-      <div className="options">
-        {
-          currencies &&
-          Object.keys(currencies).map((currency: string, index: number) => (
-            <button key={ index } onClick={() => setValue(currency) }>{ currency }</button>
-          ))
-        }
-      </div>
+      {
+        isOpen &&
+        <Options>
+          {
+            currencies &&
+            Object.keys(currencies).map((currency: string, index: number) => (
+              <button key={ index } onClick={() => props.setValue(currency) }>{ currency }</button>
+            ))
+          }
+        </Options>
+      }
     </Container>
   )
 }

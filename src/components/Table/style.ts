@@ -42,7 +42,7 @@ export const Container = styled.table`
     }
 
     tbody {
-      height: 34.2rem;
+      height: 35rem;
       overflow-y: auto;
     }
 
