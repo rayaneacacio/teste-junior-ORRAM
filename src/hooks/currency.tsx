@@ -1,10 +1,18 @@
-import { createContext, ReactElement, useContext, useState } from "react";
+import { Dispatch, SetStateAction, createContext, ReactElement, useContext, useState } from "react";
 import { apiEconomy } from "../services/api";
 
 interface ICurrencyContext {
   currencies: ICurrency;
+  selectedCurrencies: {
+    firstCurrency: string,
+    secondCurrency: string
+  };
+  setSelectedCurrencies: Dispatch<SetStateAction<{
+    firstCurrency: string;
+    secondCurrency: string;
+  }>>;
   findCurrencies: (signal: AbortSignal) => Promise<void>;
-  getVariation15days: (firstCurrency: string, secondCurrency: string) => Promise<IVariationCurrency[] | undefined>;
+  getVariations: () => Promise<IVariationCurrency[] | undefined>;
 }
 
 const initialValue  = {
@@ -13,8 +21,13 @@ const initialValue  = {
     USD: "",
     JPY: "",
   },
+  selectedCurrencies: {
+    firstCurrency: "USD",
+    secondCurrency: "BRL"
+  },
+  setSelectedCurrencies: () => {},
   findCurrencies: async(): Promise<void> => {},
-  getVariation15days: async(): Promise<IVariationCurrency[]> => [{
+  getVariations: async(): Promise<IVariationCurrency[]> => [{
     name: "",
     high: 0,
     low: 0,
@@ -43,6 +56,7 @@ export const CurrencyContext = createContext<ICurrencyContext>(initialValue);
 
 function CurrencyProvider(props: { children: ReactElement }) {
   const [ currencies, setCurrencies ] = useState<ICurrency>(initialValue.currencies);
+  const [ selectedCurrencies, setSelectedCurrencies ] = useState(initialValue.selectedCurrencies)
 
   async function findCurrencies(signal: AbortSignal): Promise<void> {
     try {
@@ -56,9 +70,9 @@ function CurrencyProvider(props: { children: ReactElement }) {
     };
   };
 
-  async function getVariation15days(firstCurrency: string, secondCurrency: string): Promise<IVariationCurrency[] | undefined> {
+  async function getVariations(): Promise<IVariationCurrency[] | undefined> {
     try {
-      const response = await apiEconomy.get(`/daily/${ firstCurrency }-${ secondCurrency }/15`);
+      const response = await apiEconomy.get(`/daily/${ selectedCurrencies.firstCurrency }-${ selectedCurrencies.secondCurrency }/15`);
       return response.data;
 
     } catch(error: any) {
@@ -67,7 +81,7 @@ function CurrencyProvider(props: { children: ReactElement }) {
   }
 
   return (
-    <CurrencyContext.Provider value={{ findCurrencies, currencies, getVariation15days }}>
+    <CurrencyContext.Provider value={{ findCurrencies, currencies, getVariations, selectedCurrencies, setSelectedCurrencies }}>
       { props.children }
     </CurrencyContext.Provider>
   )
