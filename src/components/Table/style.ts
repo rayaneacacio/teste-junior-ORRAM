@@ -9,7 +9,7 @@ export const Container = styled.table`
   }
 
   th, td {
-    padding: 1.5rem 1px;
+    padding: 1.6rem 1px;
     border-bottom: 1px solid ${({ theme }) => theme.COLORS.GRAY};
   }
 
@@ -30,10 +30,24 @@ export const Container = styled.table`
 
   @media(min-width: 1100px) {
     font-size: 1.8rem;
-    width: 100rem;
 
     .selecionarMoeda > div {
       gap: 2.5rem;
+    }
+  }
+
+  @media(min-width: 1200px) {
+    thead, tbody {
+      display: block;
+    }
+
+    tbody {
+      height: 34.2rem;
+      overflow-y: auto;
+    }
+
+    th, td {
+      width: 15rem;
     }
   }
 `;

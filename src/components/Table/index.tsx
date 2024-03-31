@@ -17,10 +17,10 @@ export default function Table(props: { variations: IVariationCurrency[] }): Reac
         </tr>
       </thead>
 
+      <tbody>
       {
         props.variations.map((variation: IVariationCurrency, index: number) => (
-        <tbody key={ index }>
-          <tr>
+          <tr key={ index }>
             <td>
               { new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(variation.low) }
             </td>
@@ -44,9 +44,9 @@ export default function Table(props: { variations: IVariationCurrency[] }): Reac
               <button className="colorGray"> <IoIosMore size={ 25 } /> </button>
             </td>
           </tr>
-        </tbody>
         ))
       }
+      </tbody>
     </Container>
   )
 }
