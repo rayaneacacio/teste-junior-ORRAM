@@ -50,7 +50,9 @@ export default createGlobalStyle`
   @media(min-width: 700px) {
     body > div {
       padding: 3rem 5rem;
+    }
 
+    body > div, tbody {
       &::-webkit-scrollbar {
         display: block;
         width: 18px;
